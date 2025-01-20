@@ -1,11 +1,20 @@
-# syntax=docker/dockerfile:1
-FROM python:3.8-alpine
+ARG BUILD_FROM
+FROM $BUILD_FROM
 
-WORKDIR /app
+# Install requirements for add-on
+RUN \
+  apk add --no-cache \
+    python3
 
-COPY src/requirements.txt requirements.txt
-RUN pip3 install -r requirements.txt
+RUN python3 -m ensurepip
+#RUN pip3 install --no-cache --upgrade pip setuptools
+RUN pip3 install pytz
+RUN pip3 install paho-mqtt
 
-COPY src/*.py ./
+# Copy data for add-on
+COPY run.sh /
+RUN chmod a+x /run.sh
 
-CMD [ "python3", "./Diematic32MQTT.py"]
+COPY src/ /
+
+CMD [ "/run.sh" ]
