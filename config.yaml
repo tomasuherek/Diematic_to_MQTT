@@ -1,0 +1,12 @@
+name: "Diematic 3"
+description: "Diematic 3"
+version: "1.0.0"
+slug: "diematic_3"
+init: false
+arch:
+  - aarch64
+  - amd64
+  - armhf
+  - armv7
+  - i386
+startup: before
